@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "");
+	int x = 0;
+	int choice;
+	string DecryptedText;
+	string text;
+	int	key;
+	string	D = "";
+	string A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	int j = 0;
+	cout << "Введите исходный текст:" << endl;
+	cin >> DecryptedText;
+	cout << "Введите ключ шифрования:" << endl;
+	cin >> key;
+	int* Decrypt = new int[DecryptedText.size()];
+
+	for (int k = 0; k < DecryptedText.size(); k++) {
+
+		for (int n = 0; n < 26; n++) {
+			if (DecryptedText[k] == A[n]) {
+				Decrypt[k] = n;
+			}
+		}
+	}
+
+	int e = 0, k = 0;
+	
+		for (int u = 0; u < DecryptedText.size(); u++) {
+
+			e = ((Decrypt[u] + key) % 26);
+			if (e < 0) {
+				e += 26;
+			}
+			k++;
+			DecryptedText[u] = A[e];
+
+		}
+		cout << "Зашифрованное сообщение: " << DecryptedText << endl;
+	
+
+
+	system("pause");
+	return 0;
+}

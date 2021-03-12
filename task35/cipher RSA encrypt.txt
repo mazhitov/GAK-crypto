@@ -1,0 +1,70 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int phi_function(int n){
+
+	int result = n;
+	for (int i = 2; i*i <= n; ++i)
+	if (n % i == 0) {
+		while (n % i == 0)
+			n /= i;
+		result -= result / i;
+	}
+	if (n > 1)
+		result -= result / n;
+	return result;
+
+}
+unsigned powmod(unsigned base, unsigned exp, unsigned modulo)
+{
+	unsigned res = 1;
+
+	while (exp != 0)
+	{
+		if ((exp & 1) != 0)
+		{
+			res = (1ll * res * base) % modulo;
+		}
+
+		base = (1ll * base * base) % modulo;
+		exp >>= 1;
+	}
+
+	return res;
+}
+void check( int a){
+	bool checkofprime = false;
+	for (int i = 2; i < sqrt(a); i++){
+		if (a%i == 0){
+			cout << "число составное, делит числа  " << i << "\n\n";
+			checkofprime = false;
+		}
+		else checkofprime = true;
+	}
+	/*if (checkofprime == true){
+	cout << "Число простое\n";
+	}*/
+}
+int main() {
+	setlocale(LC_ALL, "");
+	int e, n, P, d, p, q;	
+	double mod;
+
+	cout << "Введите большие простые числа p и q " << endl;
+	cin >> p>>q;
+	n = p*q;
+	cout << "Введите открытый ключ E " << endl;
+	cin >> e;
+	cout << "Введите  исходный текст P " << endl;
+	cin >> P;
+	//проверка модуля на простое число
+	check(p);
+	check(q); 
+	int C;
+	C = powmod(P, e, n);
+
+	cout << "Зашифвроанный текст С = " << C << "\n\n";
+	system("pause");
+	return 0;
+}

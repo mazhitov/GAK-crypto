@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+using namespace std;
+unsigned powmod(unsigned base, unsigned exp, unsigned modulo)
+{
+	unsigned res = 1;
+
+	while (exp != 0)
+	{
+		if ((exp & 1) != 0)
+		{
+			res = (1ll * res * base) % modulo;
+		}
+
+		base = (1ll * base * base) % modulo;
+		exp >>= 1;
+	}
+
+	return res;
+}
+int main() {
+	setlocale(LC_ALL, "");
+	int b, n;
+	double mod;
+	
+	cout << "Введите модуль" << endl;
+	cin >> n;
+	cout << "Введите число" << endl;
+	cin >> b;
+	//проверка модуля на простое число
+	bool checkofprime=false;
+	for (int i = 2; i < sqrt(n); i++){
+		if (n%i == 0){
+			cout << "число составное, делит числа  " << i << "\n\n";
+			checkofprime = false;
+		}
+		else checkofprime = true;
+	}
+	if (checkofprime == true){
+		cout << "Число простое\n\n\n";
+	}
+	int number_phi_function;
+
+	cout << "Малая теорема Ферма\n";
+
+	cout << "a^-1 mod p = a^p-2 mod p\n\n";
+
+	int inversion;
+	number_phi_function= n-2;
+
+	cout << " a^p-2 mod p =" << number_phi_function<<"\n\n";
+	inversion = powmod(b, number_phi_function,n);
+	cout << "Мультипликативная инверсия числа " << b << "^-1 по модулю " << n << " равен " << inversion << "\n\n";
+	system("pause");
+	return 0;
+}

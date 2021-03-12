@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int phi_function(int n){
+
+	int result = n;
+	for (int i = 2; i*i <= n; ++i)
+	if (n % i == 0) {
+		while (n % i == 0)
+			n /= i;
+		result -= result / i;
+	}
+	if (n > 1)
+		result -= result / n;
+	return result;
+
+}
+unsigned powmod(unsigned base, unsigned exp, unsigned modulo)
+{
+	unsigned res = 1;
+
+	while (exp != 0)
+	{
+		if ((exp & 1) != 0)
+		{
+			res = (1ll * res * base) % modulo;
+		}
+
+		base = (1ll * base * base) % modulo;
+		exp >>= 1;
+	}
+
+	return res;
+}
+int main() {
+	setlocale(LC_ALL, "");
+	int e, n,C,d;
+	double mod;
+
+	cout << "Введите модуль" << endl;
+	cin >> n;
+	cout << "Введите открытый ключ E " << endl;
+	cin >> e;
+	cout << "Введите зашифрованный текст С " << endl;
+	cin >> C;
+	//проверка модуля на простое число
+	bool checkofprime = false;
+	for (int i = 2; i < sqrt(n); i++){
+		if (n%i == 0){
+			cout << "число составное, делит числа  " << i << "\n\n";
+			checkofprime = false;
+		}
+		else checkofprime = true;
+	}
+	/*if (checkofprime == true){
+	cout << "Число простое\n";
+	}*/
+	int number_phi_function;
+	number_phi_function = phi_function(n);
+	cout << "Криптосистема RSA\n";
+	cout << "Phi-функция Эйлера(тотиента Эйлера) числа Ф(" << n << ") =" << number_phi_function << "\n\n";
+	int P;
+	for (int i = 2; i < number_phi_function; i++){
+		if ((e*i) % number_phi_function == 1){
+			d = i;
+			cout << "Закрытый ключ d = " << d << "\n\n";
+		}
+	}
+	P = powmod(C, d, n);
+
+	cout << "Исходный текст P = " << P << "\n\n";
+	system("pause");
+	return 0;
+}
